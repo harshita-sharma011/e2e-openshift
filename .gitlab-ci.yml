@@ -1,0 +1,121 @@
+## Define the stages & order of execution
+
+stages:
+  - CLUSTER-SETUP
+  - OPENEBS-SETUP
+  - FUNCTIONAL
+  - CHAOS
+  - CLEANUP
+
+OS-3.10-EE:
+  image: openebs/openshift-ci:latest
+  stage: CLUSTER-SETUP
+  script:     
+   - chmod 755 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/1-cluster-setup/cluster-state
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/1-cluster-setup/cluster-state
+
+OPENEBS-0.8.1:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+   - chmod 775 /Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs
+  
+CSTOR-POOL:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/create-pool
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/create-pool
+  
+Busybox-3-replica:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
+  
+OB2-busybox-d-basic-load:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB2-busybox-d-basic-load/busybox-load
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB2-busybox-d-basic-load/busybox-load
+  
+OB3-busybox-deploy-snap-clone:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB3-busybox-d-snap-clone/busybox-snap-clone
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB3-busybox-d-snap-clone/busybox-snap-clone
+  
+OB4-busybox-deploy-deprovision:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB4-busybox-d-deprovision/busybox-deprovision
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB4-busybox-d-deprovision/busybox-deprovision
+  
+OB5-busybox-statefulset-pvc-1-replica:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
+  
+OB6-busybox-s-basic-load:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-single-replica.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-single-replica.sh
+  
+OB7-busybox-s-snap-clone:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-snap-clone/snap-clone.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-snap-clone/snap-clone.sh
+  
+OB8-busybox-s-deprovision:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-deprovision/deprovision.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-deprovision/deprovision.sh
+  
+openebs-pool-failure:
+  image: openebs/openshift-ci:latest
+  stage: CHAOS
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/pool-failure.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/pool-failure.sh
+  
+openebs-target-container-chaos:
+  image: openebs/openshift-ci:latest
+  stage: CHAOS
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/istgt-kill.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/istgt-kill.sh
+  
+openebs-target-failure:
+  image: openebs/openshift-ci:latest
+  stage: CHAOS
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/target-failure.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/target-failure.sh
+  
+openebs-cleanup:
+  image: openebs/openshift-ci:latest
+  stage: CLEANUP
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/openebs-cleanup/openebs-delete.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/openebs-cleanup/openebs-delete.sh
+  
+OS-3.10-cleanup:
+  image: openebs/openshift-ci:latest
+  stage: CLEANUP
+  script:
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/OS-3.10-cleanup/OS-cleanup.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/OS-3.10-cleanup/OS-cleanup.sh
+  
