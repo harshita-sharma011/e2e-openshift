@@ -95,15 +95,15 @@ openebs-target-container-chaos:
   image: openebs/openshift-ci:latest
   stage: CHAOS
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/istgt-kill.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/istgt-kill.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-target-container-chaos/istgt-kill.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-target-container-chaos/istgt-kill.sh
   
 openebs-target-failure:
   image: openebs/openshift-ci:latest
   stage: CHAOS
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/target-failure.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/target-failure.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-target-failure/target-failure.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-target-failure/target-failure.sh
   
 openebs-cleanup:
   image: openebs/openshift-ci:latest
