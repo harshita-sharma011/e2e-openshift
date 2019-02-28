@@ -32,8 +32,8 @@ Busybox-3-replica:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
   
 OB2-busybox-d-basic-load:
   image: openebs/openshift-ci:latest
@@ -67,22 +67,22 @@ OB6-busybox-s-basic-load:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-single-replica.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-single-replica.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
   
 OB7-busybox-s-snap-clone:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-snap-clone/snap-clone.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-snap-clone/snap-clone.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
   
 OB8-busybox-s-deprovision:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-deprovision/deprovision.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-deprovision/deprovision.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
   
 openebs-pool-failure:
   image: openebs/openshift-ci:latest
