@@ -116,6 +116,6 @@ OS-3.10-cleanup:
   image: openebs/openshift-ci:latest
   stage: CLEANUP
   script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/OS-3.10-cleanup/OS-cleanup.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/OS-3.10-cleanup/OS-cleanup.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/OS-3.10-cleanup/OS-cleanup
+   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/OS-3.10-cleanup/OS-cleanup
   
