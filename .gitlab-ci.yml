@@ -18,7 +18,7 @@ OPENEBS-0.8.1:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
-   - chmod 775 /Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
+   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
   
 CSTOR-POOL:
