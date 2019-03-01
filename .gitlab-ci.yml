@@ -28,77 +28,77 @@ CSTOR-POOL:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/create-pool.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/create-pool.sh
   
-Busybox-3-replica:
+APP-Deploy:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
   
-OB2-busybox-d-basic-load:
+APP-load:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB2-busybox-d-basic-load/busybox-load.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB2-busybox-d-basic-load/busybox-load.sh
   
-OB3-busybox-deploy-snap-clone:
+APP-snap-clone:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB3-busybox-d-snap-clone/busybox-snap-clone.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB3-busybox-d-snap-clone/busybox-snap-clone.sh
   
-OB4-busybox-deploy-deprovision:
+APP-Delete:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB4-busybox-d-deprovision/busybox-deprovision.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB4-busybox-d-deprovision/busybox-deprovision.sh
   
-OB5-busybox-statefulset-pvc-1-replica:
+APP-Sts:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
   
-OB6-busybox-s-basic-load:
+STS-load:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
   
-OB7-busybox-s-snap-clone:
+STS-snap-clone:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
   
-OB8-busybox-s-deprovision:
+STS-Delete:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
   
-openebs-pool-failure:
+CSTOR-Failure:
   image: openebs/openshift-ci:latest
   stage: CHAOS
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/pool-failure.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-pool-failure/pool-failure.sh
   
-openebs-target-container-chaos:
+STORAGE-LOSS:
   image: openebs/openshift-ci:latest
   stage: CHAOS
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-target-container-chaos/istgt-kill.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/openebs-target-container-chaos/istgt-kill.sh
   
-openebs-target-failure:
+TARGET-Loss:
   image: openebs/openshift-ci:latest
   stage: CHAOS
   script:
@@ -112,7 +112,7 @@ openebs-cleanup:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/openebs-cleanup/openebs-delete.sh
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/5-cleanup/openebs-cleanup/openebs-delete.sh
   
-OS-3.10-cleanup:
+OS-cleanup:
   image: openebs/openshift-ci:latest
   stage: CLEANUP
   script:
