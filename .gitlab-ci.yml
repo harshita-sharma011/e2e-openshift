@@ -31,6 +31,7 @@ CSTOR-POOL:
 APP-Deploy:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
+  parallel: 2
   script:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB1-busybox-d-pvc-3-replica/busybox-3-replicas
