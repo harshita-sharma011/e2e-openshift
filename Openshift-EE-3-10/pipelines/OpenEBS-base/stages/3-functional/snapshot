@@ -16,7 +16,7 @@ kubectl apply -f Openshift-EE-3-10/utils/e2e-crd.yml
 
 echo "****Creating e2e-crd********"
 cat Openshift-EE-3-10/utils/e2e-result.yml > snapshot-result.yml
-sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" -e"s/<job_id>/$job_id/g" snapshot-result.yml
+sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/backup-restore/g" -e"s/<job_id>/$job_id/g" snapshot-result.yml
 
 time="date"
 current_time=$(eval $time)
@@ -26,31 +26,32 @@ cat snapshot-result.yml
 
 echo "*******Deploying Application****"
 sleep 5
-echo "      Application-deployments: pass" >> snapshot-result.yml
+echo "      Application-Deployment: Pass" >> snapshot-result.yml
 cat snapshot-result.yml
 kubectl apply -f snapshot-result.yml
 
 echo "*******Generating load**********"
 sleep 5
-echo "      Application-Loadgen: pass" >> snapshot-result.yml
+echo "      Application-Loadgen: Pass" >> snapshot-result.yml
 cat snapshot-result.yml
 kubectl apply -f snapshot-result.yml
 
 echo "*******Taking Backup************"
 sleep 5
-echo "      Backup: fail" >> snapshot-result.yml
+echo "      Snapshot-Clone: Fail" >> snapshot-result.yml
 cat snapshot-result.yml
 kubectl apply -f snapshot-result.yml
 
 echo "*******Deprovisioning Application******"
 sleep 5
-echo "      Application-Deprovisioning: pass" >> snapshot-result.yml
+echo "      Application-Deprovisioning: Pass" >> snapshot-result.yml
 cat snapshot-result.yml
 kubectl apply -f snapshot-result.yml
 
 current_time=$(eval $time)
 sed -i -e "s/<test-finish>/$current_time/g" snapshot-result.yml
-
+sed -i -e "s/<test-result>/Fail/g" snapshot-result.yml
+cat snapshot-result.yml
 }
 
 if [ "$1" == "node" ];then
