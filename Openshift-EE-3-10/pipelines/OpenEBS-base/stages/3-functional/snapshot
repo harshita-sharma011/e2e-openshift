@@ -5,20 +5,18 @@ pod() {
 ###clone e2e-openshift-repo
 echo "cloneing e2e-openshift repo*************"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout dummyjobs && bash Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/snapshot node'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout dummyjobs && bash Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/snapshot node $CI_JOB_ID'
 
 }
 
 node() {
-
+job_id=$(echo $2)
 echo "*********Applying e2e-crd***********"
 kubectl apply -f Openshift-EE-3-10/utils/e2e-crd.yml
 
 echo "****Creating e2e-crd********"
-ci_job_id= $CI_JOB_ID
-echo $CI_JOB_ID
 cat Openshift-EE-3-10/utils/e2e-result.yml > snapshot-result.yml
-sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" -e"s/<job_id>/$ci_job_id/g" snapshot-result.yml
+sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" -e"s/<job_id>/$job_id/g" snapshot-result.yml
 
 time="date"
 current_time=$(eval $time)
