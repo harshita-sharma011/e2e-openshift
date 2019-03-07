@@ -64,33 +64,33 @@ Backup-restore:
    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/snapshot
    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/snapshot pod
   
-APP-Sts:
-  image: openebs/openshift-ci:latest
-  stage: FUNCTIONAL
-  script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
+# APP-Sts:
+#   image: openebs/openshift-ci:latest
+#   stage: FUNCTIONAL
+#   script:
+#    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
+#    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB5-busybox-s-pvc-1-replica/busybox-single-replica.sh
   
-STS-load:
-  image: openebs/openshift-ci:latest
-  stage: FUNCTIONAL
-  script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
+# STS-load:
+#   image: openebs/openshift-ci:latest
+#   stage: FUNCTIONAL
+#   script:
+#    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
+#    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB6-busybox-s-basic-load/busybox-load.sh
   
-STS-snap-clone:
-  image: openebs/openshift-ci:latest
-  stage: FUNCTIONAL
-  script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
+# STS-snap-clone:
+#   image: openebs/openshift-ci:latest
+#   stage: FUNCTIONAL
+#   script:
+#    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
+#    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB7-busybox-s-snap-clone/snap-clone.sh
   
-STS-Delete:
-  image: openebs/openshift-ci:latest
-  stage: FUNCTIONAL
-  script:
-   - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
-   - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
+# STS-Delete:
+#   image: openebs/openshift-ci:latest
+#   stage: FUNCTIONAL
+#   script:
+#    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
+#    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/OB8-busybox-s-deprovision/deprovision.sh
   
 CSTOR-Failure:
   image: openebs/openshift-ci:latest

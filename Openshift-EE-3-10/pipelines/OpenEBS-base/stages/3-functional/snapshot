@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 pod() {
-    
+
 ##clone e2e-openshift-repo
 echo "cloneing e2e-openshift repo*************"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
@@ -15,7 +15,7 @@ echo "*********Applying e2e-crd***********"
 kubectl apply -f Openshift-EE-3-10/utils/e2e-crd.yml
 
 echo "****Creating e2e-crd********"
-cat Openshift-EE-3-10/utils/gitlab-result.yml > snapshot-result.yml
+cat Openshift-EE-3-10/utils/e2e-result.yml > snapshot-result.yml
 sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" snapshot-result.yml
 
 time="date"
