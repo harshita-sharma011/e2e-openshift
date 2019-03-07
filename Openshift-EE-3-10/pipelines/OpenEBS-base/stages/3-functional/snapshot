@@ -1,0 +1,60 @@
+#!/bin/bash
+set -x
+pod() {
+    
+##clone e2e-openshift-repo
+echo "cloneing e2e-openshift repo*************"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout dummyjobs && bash Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/snapshot node'
+
+}
+
+node() {
+
+echo "*********Applying e2e-crd***********"
+kubectl apply -f Openshift-EE-3-10/utils/e2e-crd.yml
+
+echo "****Creating e2e-crd********"
+cat Openshift-EE-3-10/utils/gitlab-result.yml > snapshot-result.yml
+sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" snapshot-result.yml
+
+time="date"
+current_time=$(eval $time)
+sed -i -e "s/<test-init>/$current_time/g" -e "s/<openebs-id>/0.8.1/g" snapshot-result.yml
+kubectl apply -f snapshot-result.yml
+cat snapshot-result.yml
+
+echo "*******Deploying Application****"
+sleep 5
+echo "      Application-deployment: pass" >> snapshot-result.yml
+cat snapshot-result.yml
+kubectl apply -f snapshot-result.yml
+
+echo "*******Generating load**********"
+sleep 5
+echo "      Application-Loadgen: pass" >> snapshot-result.yml
+cat snapshot-result.yml
+kubectl apply -f snapshot-result.yml
+
+echo "*******Taking Backup************"
+sleep 5
+echo "      Backup: fail" >> snapshot-result.yml
+cat snapshot-result.yml
+kubectl apply -f snapshot-result.yml
+
+echo "*******Deprovisioning Application******"
+sleep 5
+echo "      Application-Deprovisioning: pass" >> snapshot-result.yml
+cat snapshot-result.yml
+kubectl apply -f snapshot-result.yml
+
+current_time=$(eval $time)
+sed -i -e "s/<test-finish>/$current_time/g" snapshot-result.yml
+
+}
+
+if [ "$1" == "node" ];then
+  node
+else
+  pod
+fi
