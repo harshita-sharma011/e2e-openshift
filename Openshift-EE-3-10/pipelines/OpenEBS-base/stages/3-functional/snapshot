@@ -26,7 +26,7 @@ cat snapshot-result.yml
 
 echo "*******Deploying Application****"
 sleep 5
-echo "      Application-deployment: pass" >> snapshot-result.yml
+echo "      Application-deployments: pass" >> snapshot-result.yml
 cat snapshot-result.yml
 kubectl apply -f snapshot-result.yml
 
