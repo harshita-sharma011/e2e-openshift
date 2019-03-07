@@ -12,7 +12,7 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && 
 }
 
 node() {
-job_id=$(echo $2)
+job_id=$(echo "$2")
 
 echo "*********Applying e2e-crd***********"
 kubectl apply -f Openshift-EE-3-10/utils/e2e-crd.yml
