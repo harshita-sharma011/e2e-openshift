@@ -4,7 +4,7 @@ kind: e2eResult
 metadata:
 
   # name of the e2e testcase
-  name: <test-name>-$CI_JOB_ID
+  name: <test-name>-<job_id>
 spec:
   testResult: <test-result>
   testStatus:
