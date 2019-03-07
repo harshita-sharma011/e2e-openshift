@@ -13,5 +13,4 @@ spec:
     end_time: <test-finish>
     build_id: <openebs-id>
     job_id: <job-id>
-    event:
-    
+    event:   

@@ -15,8 +15,9 @@ echo "*********Applying e2e-crd***********"
 kubectl apply -f Openshift-EE-3-10/utils/e2e-crd.yml
 
 echo "****Creating e2e-crd********"
+ci_job_id= $(eval $CI_JOB_ID)
 cat Openshift-EE-3-10/utils/e2e-result.yml > snapshot-result.yml
-sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" -e"s/<job_id>/$CI_JOB_ID/g" snapshot-result.yml
+sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/Snapshot/g" -e"s/<job_id>/$ci_job_id/g" snapshot-result.yml
 
 time="date"
 current_time=$(eval $time)
