@@ -59,8 +59,8 @@ cat memory-check-$job_id.yml
 
 "$@"
 
-#if [ "$1" == "node" ];then
-  #node
-#else
-  #pod
-#fi
+if [ "$1" == "node" ];then
+  node $2
+else
+  pod
+fi

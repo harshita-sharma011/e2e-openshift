@@ -1,12 +1,10 @@
 #!/bin/bash
 set -x
 
-
 pod() {
 echo $CI_JOB_ID
 ###clone e2e-openshift-repo
 echo "cloneing e2e-openshift repo*************"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'echo $CI_JOB_ID > job_id.txt'
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout dummyjobs && bash Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC10-Sts-App-replica-scaleup/app-replica-scaleup node '"'$CI_JOB_ID'"''
 }
@@ -59,10 +57,8 @@ sed -i -e "s/Running/Completed/g" application-scaleup-$job_id.yml
 cat application-scaleup-$job_id.yml
 }
 
-"$@"
-
-#if [ "$1" == "node" ];then
-  #node
-#else
-  #pod
-#fi
+if [ "$1" == "node" ];then
+  node $2
+else
+  pod
+fi

@@ -56,10 +56,8 @@ sed -i -e "s/Running/Completed/g" storage-vol-scaleup-$job_id.yml
 cat storage-vol-scaleup-$job_id.yml
 }
 
-"$@"
-
-#if [ "$1" == "node" ];then
-  #node
-#else
-  #pod
-#fi
+if [ "$1" == "node" ];then
+  node $2
+else
+  pod
+fi
