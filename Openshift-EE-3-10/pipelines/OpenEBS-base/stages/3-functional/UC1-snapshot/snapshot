@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+
 pod() {
 echo $CI_JOB_ID
 ###clone e2e-openshift-repo
@@ -54,10 +55,10 @@ sed -i -e "s/Running/Completed/g" snapshot-result-$job_id.yml
 cat snapshot-result-$job_id.yml
 }
 
-"$@"
+#"$@"
 
-#if [ "$1" == "node" ];then
-  #node
-#else
-  #pod
-#fi
+if [ "$1" == "node" ];then
+  node $2
+else
+  pod
+fi
