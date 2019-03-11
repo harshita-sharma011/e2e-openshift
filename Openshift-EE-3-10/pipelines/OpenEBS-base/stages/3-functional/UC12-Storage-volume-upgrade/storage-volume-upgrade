@@ -59,4 +59,4 @@ if [ "$1" == "node" ];then
   node $2
 else
   pod
-fii
+fi
