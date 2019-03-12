@@ -31,7 +31,7 @@ cStor-Pool:
 .func_test_template:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
-  parallel: 4
+  parallel: 2
   when: always 
 
 Snapshot:
@@ -46,31 +46,31 @@ Clone:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC2-snapshot-clone/snapshot-clone
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC2-snapshot-clone/snapshot-clone
 
-Snap-Rebuild-1:
+Snap-Rebuild1:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC3-snap-rebuild-single-rep/snap-rebuild-single-rep
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC3-snap-rebuild-single-rep/snap-rebuild-single-rep
 
-Snap-Rebuild-2:
+Snap-Rebuild2:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC4-snap-rebuild-multiple-rep/snap-rebuild-multiple-rep
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC4-snap-rebuild-multiple-rep/snap-rebuild-multiple-rep
 
-Clone-Rebuild-1:
+Clone-Rebuild1:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC5-clone-pre-snap-rebuild/clone-pre-rebuild
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC5-clone-pre-snap-rebuild/clone-pre-rebuild
 
-Clone-Rebuild-2:
+Clone-Rebuild2:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC6-clone-during-snap-rebuild/clone-during-rebuild
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC6-clone-during-snap-rebuild/clone-during-rebuild
 
-Clone-Rebuild-3:
+Clone-Rebuild3:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC7-clone-post-snap-rebuild/clone-post-rebuild
@@ -134,7 +134,7 @@ Volume-Capacity:
   image: openebs/openshift-ci:latest
   stage: CHAOS
   when: always
-  parallel: 4
+  parallel: 2
 
 Application:
   extends: .chaos_test_template
