@@ -14,14 +14,14 @@ OS-3.10-EE:
     - chmod 755 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/1-cluster-setup/cluster-state.sh
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/1-cluster-setup/cluster-state.sh
 
-OPENEBS-0.8.1:
+OpenEBS-0.8.1:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
   
-CSTOR-POOL:
+cStor-Pool:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
@@ -31,6 +31,7 @@ CSTOR-POOL:
 .func_test_template:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
+  parallel: 4
   dependencies:
     - OPENEBS-0.8.1
      
@@ -112,7 +113,7 @@ Vol-Distribute:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC13-STS-Volume-Distribution/volume-distribution
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC13-STS-Volume-Distribution/volume-distribution
 
-Data-integrity:
+Data-Integrity:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC14-Data-Integrity/data-integrity
@@ -133,28 +134,29 @@ Volume-Capacity:
 .chaos_test_template:
   image: openebs/openshift-ci:latest
   stage: CHAOS
+  parallel: 4
   dependencies:
     - OPENEBS-0.8.1
 
-App-Kill:
+Application:
   extends: .chaos_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-1-app-kill/app-kill
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-1-app-kill/app-kill
 
-iStgt-Kill:
+Target:
   extends: .chaos_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-2-istgt-kill/istgt-kill
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-2-istgt-kill/istgt-kill
 
-Pool-Kill:
+cStor-Pool:
   extends: .chaos_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-3-pool-kill/pool-kill
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-3-pool-kill/pool-kill
     
-Volume-Kill:
+Volume:
   extends: .chaos_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-4-volume-kill/volume-kill
@@ -184,7 +186,7 @@ Pool-n/w-Delay:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-7-pool-network-delay/pool-network-delay
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-7-pool-network-delay/pool-network-delay
 
-Zrepl-Kill:
+Volume-Manager:
   extends: .chaos_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-8-zrepl-kill/zrepl-kill
@@ -208,7 +210,7 @@ Docker-Crash:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-11-docker-down/docker-down
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-11-docker-down/docker-down
 
-Memory-Pressure:
+Mem-Pressure:
   extends: .chaos_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-12-memory-pressure/memory-pressure
@@ -232,7 +234,7 @@ Node-Evict:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-15-evict-node/evict-node
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-15-evict-node/evict-node
 
-openebs-cleanup:
+OpenEBS-cleanup:
   image: openebs/openshift-ci:latest
   stage: CLEANUP
   script:
