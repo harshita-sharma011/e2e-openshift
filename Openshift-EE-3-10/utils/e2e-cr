@@ -1,0 +1,18 @@
+#!/bin/bash
+set -x
+
+job_name=$(echo $1 | cut -d ":" -f 2)
+job_phase=$(echo $2 | cut -d ":" -f 2)
+
+
+cat Openshift-EE-3-10/utils/e2e-result.yml > result.yml
+
+echo "******Creating e2e-result-custom-resource******"
+
+sed -i -e "s/<test-phase>/$job_phase/g" -e "s/<test-name>/$job_name/g" result.yml
+
+cat result.yml
+
+kubectl apply -f result.yml
+
+rm result.yml

@@ -21,12 +21,19 @@ OPENEBS-0.8.1:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
   
-CSTOR-POOL:
+OPENEBS-POOL:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/create-pool.sh
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/create-pool.sh
+
+POLICIES:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/openebs-sc
+    - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/openebs-sc
     
 .func_test_template:
   image: openebs/openshift-ci:latest
