@@ -32,8 +32,9 @@ cStor-Pool:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
   parallel: 4
+  when: always
   dependencies:
-    - OPENEBS-0.8.1
+    - OpenEBS-0.8.1
      
 Snapshot:
   extends: .func_test_template
@@ -134,9 +135,10 @@ Volume-Capacity:
 .chaos_test_template:
   image: openebs/openshift-ci:latest
   stage: CHAOS
+  when: always
   parallel: 4
   dependencies:
-    - OPENEBS-0.8.1
+    - OpenEBS-0.8.1
 
 Application:
   extends: .chaos_test_template
