@@ -14,14 +14,14 @@ OS-3.10-EE:
     - chmod 755 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/1-cluster-setup/cluster-state.sh
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/1-cluster-setup/cluster-state.sh
 
-OpenEBS-0.8.1:
+OPENEBS-0.8.1:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/2-setup/deploy-openebs.sh
   
-cStor-Pool:
+CSTOR-POOL:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
@@ -46,37 +46,37 @@ Clone:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC2-snapshot-clone/snapshot-clone
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC2-snapshot-clone/snapshot-clone
 
-Snap-Rebuild1:
+Snap-1-Rebuild:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC3-snap-rebuild-single-rep/snap-rebuild-single-rep
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC3-snap-rebuild-single-rep/snap-rebuild-single-rep
 
-Snap-Rebuild2:
+Snap-2-Rebuild:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC4-snap-rebuild-multiple-rep/snap-rebuild-multiple-rep
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC4-snap-rebuild-multiple-rep/snap-rebuild-multiple-rep
 
-Clone-Rebuild1:
+Clone-1-Rebuild:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC5-clone-pre-snap-rebuild/clone-pre-rebuild
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC5-clone-pre-snap-rebuild/clone-pre-rebuild
 
-Clone-Rebuild2:
+Clone-2-Rebuild:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC6-clone-during-snap-rebuild/clone-during-rebuild
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC6-clone-during-snap-rebuild/clone-during-rebuild
 
-Clone-Rebuild3:
+Clone-3-Rebuild:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC7-clone-post-snap-rebuild/clone-post-rebuild
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC7-clone-post-snap-rebuild/clone-post-rebuild
 
-Parent-Vol-Delete:
+Parent-vol-delete:
   extends: .func_test_template
   script: 
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/3-functional/UC8-Clone-parent-vol-delete/clone-parent-vol-delete
@@ -232,7 +232,7 @@ Node-Evict:
     - chmod 775 ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-15-evict-node/evict-node
     - ./Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-15-evict-node/evict-node
 
-OpenEBS-cleanup:
+Openebs-cleanup:
   image: openebs/openshift-ci:latest
   stage: CLEANUP
   script:
