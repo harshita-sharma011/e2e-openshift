@@ -8,7 +8,7 @@ echo $CI_JOB_ID
 echo "cloneing e2e-openshift repo*************"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'echo $CI_JOB_ID > job_id.txt'
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout dummyjobs && bash Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-13-cpu-pressure/cpu-pressure node '"'$CI_JOB_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout rigorous && bash Openshift-EE-3-10/pipelines/OpenEBS-base/stages/4-chaos/UC-13-cpu-pressure/cpu-pressure node '"'$CI_JOB_ID'"''
 }
 
 node() {
