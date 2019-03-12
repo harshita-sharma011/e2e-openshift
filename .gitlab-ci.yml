@@ -1,4 +1,4 @@
-### Define the stages & order of execution
+#### Define the stages & order of execution
 
 stages:
   - CLUSTER-SETUP
