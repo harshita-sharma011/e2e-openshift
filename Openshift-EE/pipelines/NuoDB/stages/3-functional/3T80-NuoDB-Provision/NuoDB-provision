@@ -6,7 +6,7 @@ echo $CI_JOB_ID
 ###clone e2e-openshift-repo
 echo "cloning e2e-openshift repo*************"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/3T80-NuoDB-Provision/NuoDB-Provision node '"'$CI_JOB_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/NuoDB/stages/3-functional/3T80-NuoDB-Provision/NuoDB-Provision node '"'$CI_JOB_ID'"''
 }
 
 node() {
