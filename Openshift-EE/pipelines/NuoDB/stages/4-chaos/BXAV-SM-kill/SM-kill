@@ -1,0 +1,61 @@
+#!/bin/bash
+set -x
+
+
+pod() {
+echo $CI_JOB_ID
+###clone e2e-openshift-repo
+echo "cloning e2e-openshift repo*************"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/OpenEBS-base/stages/4-chaos/BXAV-SM-kill/SM-kill node '"'$CI_JOB_ID'"''
+}
+
+node() {
+job_id=$(echo $1)
+echo $job_id
+echo "*********Applying e2e-crd***********"
+kubectl apply -f Openshift-EE/utils/e2e-crd.yml
+
+echo "****Creating e2e-crd********"
+cat Openshift-EE/utils/e2e-result.yml > sm-kill-result.yml
+sed -i -e "s/<test-phase>/Running/g" -e "s/<test-name>/sm-kill/g" -e"s/<job_id>/$job_id/g" sm-kill-result.yml
+
+time="date"
+current_time=$(eval $time)
+sed -i -e "s/<test-init>/$current_time/g" -e "s/<openebs-id>/0.8.1/g" sm-kill-result.yml
+kubectl apply -f sm-kill-result.yml
+cat sm-kill-result.yml
+
+test_name=$(bash Openshift-EE/utils/generate_test_name testcase=nuodb-app-chaos metadata="")
+echo $test_name
+
+echo "*******Trigger litmus job to perform SM kill************"
+cd litmus
+echo "Running the litmus test.."
+run_test=apps/nuodb/chaos/app_pod_failure/run_litmus_test.yml
+cat $run_test
+
+bash ../Openshift-EE/utils/litmus_job_runner label='app:nuodb-app-chaos' job=$run_test
+
+echo "Dumping state of cluster post job run"; echo ""
+bash ../Openshift-EE/utils/dump_cluster_state;
+
+#################
+## GET RESULT  ##
+#################
+
+## Check the test status & result from the litmus result custom resource
+
+cd .. && bash Openshift-EE/utils/get_litmus_result ${test_name} sm-kill
+
+current_time=$(eval $time)
+sed -i -e "s/<test-finish>/$current_time/g" sm-kill-result.yml
+sed -i -e "s/<test-result>/Fail/g" sm-kill-result.yml
+cat sm-kill-result.yml
+}
+
+if [ "$1" == "node" ];then
+  node $2
+else
+  pod
+fi
