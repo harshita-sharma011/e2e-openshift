@@ -2,7 +2,7 @@
 set -x
 pod() {
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout master && bash Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/1CXH-storage-policies/openebs-sc node '"'$CI_JOB_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/BV40-storage-policies/openebs-sc node '"'$CI_JOB_ID'"''
 }
 
 node() {
@@ -29,7 +29,7 @@ echo "Running the litmus test.."
 
 run_test=providers/cstor-storage-policies/run_litmus_test.yml
 
-cat $run_test
+cat $run_test`
 
 bash ../Openshift-EE/utils/litmus_job_runner label='app:cstor-storage-policy' job=$run_test
 
