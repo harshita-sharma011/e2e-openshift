@@ -21,12 +21,12 @@ DQ7H-OpenEBS-v0.8.1:
     - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/2-setup/DQ7H-openebs-depoy/deploy-openebs
     - ./Openshift-EE/pipelines/NuoDB/stages/2-setup/DQ7H-openebs-depoy/deploy-openebs
 
-BV40-OpenEBS-POLICIES:
-  image: openebs/openshift-ci:latest
-  stage: OPENEBS-SETUP
-  script:
-    - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/2-setup/BV40-storage-policies/openebs-sc
-    - ./Openshift-EE/pipelines/NuoDB/stages/2-setup/BV40-storage-policies/openebs-sc
+      #BV40-OpenEBS-POLICIES:
+      #image: openebs/openshift-ci:latest
+      # stage: OPENEBS-SETUP
+      #script:
+      #- chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/2-setup/BV40-storage-policies/openebs-sc
+      #- ./Openshift-EE/pipelines/NuoDB/stages/2-setup/BV40-storage-policies/openebs-sc
   
 75RJ-CSTOR-POOL:
   image: openebs/openshift-ci:latest
