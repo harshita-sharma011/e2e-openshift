@@ -32,6 +32,7 @@ cd litmus
 echo "Running the litmus test.."
 run_test=apps/nuodb/deployers/run_litmus_test.yml
 cat $run_test
+sed -i -e 's/enable/disable/g' $run_test
 
 bash ../Openshift-EE/utils/litmus_job_runner label='app:nuodb-deployment' job=$run_test
 
