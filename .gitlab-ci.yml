@@ -38,18 +38,20 @@ BV40-OpenEBS-POLICIES:
 .func_test_template:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
+  when: always
   dependencies:
     - DQ7H-OpenEBS-v0.8.1
      
 3T80-NuoDB-Provision:
   extends: .func_test_template
   script: 
-    - chmod 775 ./Openshift-EE/pipelines/Nuodb/stages/3-functional/3T80-NuoDB-Provision/NuoDB-provision
+    - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/3-functional/3T80-NuoDB-Provision/NuoDB-provision
     - ./Openshift-EE/pipelines/NuoDB/stages/3-functional/3T80-NuoDB-Provision/NuoDB-provision
 
 .chaos_test_template:
   image: openebs/openshift-ci:latest
   stage: CHAOS
+  when: always
   dependencies:
     - DQ7H-OpenEBS-v0.8.1
 
