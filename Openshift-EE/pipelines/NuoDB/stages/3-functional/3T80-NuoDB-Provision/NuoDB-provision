@@ -5,6 +5,7 @@ pod() {
 echo $CI_JOB_ID
 ###clone e2e-openshift-repo
 echo "cloning e2e-openshift repo*************"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 ssh root@10.23.1.10 'oc adm policy add-scc-to-user anyuid system:serviceaccount:nuodbns:default'
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'git clone https://github.com/openebs/e2e-openshift.git'
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/NuoDB/stages/3-functional/3T80-NuoDB-Provision/NuoDB-provision node '"'$CI_JOB_ID'"''
 }
