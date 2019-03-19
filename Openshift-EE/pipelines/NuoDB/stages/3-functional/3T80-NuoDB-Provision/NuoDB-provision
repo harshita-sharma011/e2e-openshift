@@ -5,8 +5,8 @@ pod() {
 echo $CI_JOB_ID
 ###clone e2e-openshift-repo
 echo "cloning e2e-openshift repo*************"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/NuoDB/stages/3-functional/3T80-NuoDB-Provision/NuoDB-provision node '"'$CI_JOB_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'git clone https://github.com/openebs/e2e-openshift.git'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'cd e2e-openshift && git checkout nuodb && bash Openshift-EE/pipelines/NuoDB/stages/3-functional/3T80-NuoDB-Provision/NuoDB-provision node '"'$CI_JOB_ID'"''
 }
 
 node() {
@@ -27,11 +27,7 @@ kubectl apply -f Openshift-EE/utils/result-nuodb-provision.yml
 test_name=$(bash Openshift-EE/utils/generate_test_name testcase=nuodb-deployment metadata="")
 echo $test_name
 
-mkdir sud
-cd sud
-git clone https://github.com/dargas/litmus.git
 cd litmus
-git checkout nuodb
 
 echo "Running the litmus test.."
 run_test=apps/nuodb/deployers/OpenShift/run_litmus_test.yml
