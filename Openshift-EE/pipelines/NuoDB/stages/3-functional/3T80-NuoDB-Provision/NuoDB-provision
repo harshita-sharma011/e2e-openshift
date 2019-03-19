@@ -16,23 +16,27 @@ current_time=$(eval $time)
 echo "*********Applying e2e-crd***********"
 kubectl apply -f Openshift-EE/utils/e2e-crd.yml
 echo "*****Deploying openebs*******"
-bash Openshift-EE/utils/e2e-cr jobname:NuoDB-Provision jobphase:Waiting
-bash Openshift-EE/utils/e2e-cr jobname:NuoDB-Provision jobphase:Running init_time:"$current_time"
+bash Openshift-EE/utils/e2e-cr jobname:nuodb-provision jobphase:Waiting
+bash Openshift-EE/utils/e2e-cr jobname:nuodb-provision jobphase:Running init_time:"$current_time"
 
 # Removing test_id from e2e-result.yml spec for simple mode
 #sed -i "s/-<job_id>/ /g" Openshift-EE/utils/result-volume-replica-distribution.yml
 
-kubectl apply -f Openshift-EE/utils/result-NuoDB-provision.yml
+kubectl apply -f Openshift-EE/utils/result-nuodb-provision.yml
 
 test_name=$(bash Openshift-EE/utils/generate_test_name testcase=nuodb-deployment metadata="")
 echo $test_name
 
-echo "*******Deploying Application and Check the statefulset storage volume distributed************"
+mkdir sud
+cd sud
+git clone https://github.com/dargas/litmus.git
 cd litmus
+git checkout nuodb
+
 echo "Running the litmus test.."
-run_test=apps/nuodb/deployers/run_litmus_test.yml
+run_test=apps/nuodb/deployers/OpenShift/run_litmus_test.yml
+
 cat $run_test
-sed -i -e 's/enable/disable/g' $run_test
 
 bash ../Openshift-EE/utils/litmus_job_runner label='app:nuodb-deployment' job=$run_test
 
@@ -45,7 +49,7 @@ bash ../Openshift-EE/utils/dump_cluster_state;
 
 ## Check the test status & result from the litmus result custom resource
 
-cd .. && bash Openshift-EE/utils/get_litmus_result ${test_name} NuoDB-provision
+cd .. && bash Openshift-EE/utils/get_litmus_result ${test_name} nuodb-provision
 }
 
 if [ "$1" == "node" ];then

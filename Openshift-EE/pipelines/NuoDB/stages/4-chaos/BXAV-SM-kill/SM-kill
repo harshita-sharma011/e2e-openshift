@@ -16,8 +16,8 @@ current_time=$(eval $time)
 echo "*********Applying e2e-crd***********"
 kubectl apply -f Openshift-EE/utils/e2e-crd.yml
 echo "*****Deploying openebs*******"
-bash Openshift-EE/utils/e2e-cr jobname:SM-kill jobphase:Waiting
-bash Openshift-EE/utils/e2e-cr jobname:SM-kill jobphase:Running init_time:"$current_time"
+bash Openshift-EE/utils/e2e-cr jobname:sm-kill jobphase:Waiting
+bash Openshift-EE/utils/e2e-cr jobname:sm-kill jobphase:Running init_time:"$current_time"
 
 # Removing test_id from e2e-result.yml spec for simple mode
 #sed -i "s/-<job_id>/ /g" Openshift-EE/utils/result-volume-replica-distribution.yml
@@ -44,7 +44,7 @@ bash ../Openshift-EE/utils/dump_cluster_state;
 
 ## Check the test status & result from the litmus result custom resource
 
-cd .. && bash Openshift-EE/utils/get_litmus_result ${test_name} SM-kill
+cd .. && bash Openshift-EE/utils/get_litmus_result ${test_name} sm-kill
 }
 
 if [ "$1" == "node" ];then
