@@ -11,8 +11,8 @@ NRBS-OpenShift-3.10:
   image: openebs/openshift-ci:latest
   stage: CLUSTER-SETUP
   script:     
-    - chmod 755 ./Openshift-EE/pipelines/Redis/stages/1-cluster-setup/NP1F-cluster-state/cluster-state
-    - ./Openshift-EE/pipelines/Redis/stages/1-cluster-setup/NP1F-cluster-state/cluster-state
+    - chmod 755 ./Openshift-EE/pipelines/Redis/stages/NP1F-cluster-setup/cluster-state
+    - ./Openshift-EE/pipelines/Redis/stages/NP1F-cluster-setup/cluster-state
 
 DQ7H-OpenEBS-v0.8.1:
   image: openebs/openshift-ci:latest
@@ -45,8 +45,8 @@ DQ7H-OpenEBS-v0.8.1:
 3T80-Redis-Provision:
   extends: .func_test_template
   script: 
-    - chmod 775 ./Openshift-EE/pipelines/Redis/stages/3-functional/T7QC-deploy-redis/redis-provision
-    - ./Openshift-EE/pipelines/Redis/stages/3-functional/T7QC-deploy-redis/redis-provision
+    - chmod 775 ./Openshift-EE/pipelines/Redis/stages/3-functional/T7QC-deploy-Redis/redis-provision
+    - ./Openshift-EE/pipelines/Redis/stages/3-functional/T7QC-deploy-Redis/redis-provision
 
 .chaos_test_template:
   image: openebs/openshift-ci:latest
@@ -79,4 +79,4 @@ DB1T-cluster-Delete:
     - NRBS-OpenShift-3.10
   script:
     - chmod 775 ./Openshift-EE/pipelines/Redis/stages/5-cleanup/NYKG-cluster-cleanup/cluster-cleanup
-- ./Openshift-EE/pipelines/Redis/stages/5-cleanup/NYKG-cluster-cleanup/cluster-cleanup
+    - ./Openshift-EE/pipelines/Redis/stages/5-cleanup/NYKG-cluster-cleanup/cluster-cleanup
