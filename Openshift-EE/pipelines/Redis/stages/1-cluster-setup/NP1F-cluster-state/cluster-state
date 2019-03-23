@@ -1,0 +1,4 @@
+#!/bin/bash
+set -x
+echo "***Setting up Openshift-cluser***"
+sleep 2
