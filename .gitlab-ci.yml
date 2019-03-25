@@ -18,22 +18,22 @@ EUOS-OpenShift-3.10:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
-    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-setup/508B-openebs-deploy/deploy-openebs
-    - ./Openshift-EE/pipelines/PostGres/stages/2-setup/508B-openebs-deploy/deploy-openebs
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-openebs-setup/508B-openebs-deploy/deploy-openebs
+    - ./Openshift-EE/pipelines/PostGres/stages/2-openebs-setup/508B-openebs-deploy/deploy-openebs
 
 H3IV-OpenEBS-POLICIES:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
-    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-setup/H3IV-storage-policies/openebs-sc
-    - ./Openshift-EE/pipelines/PostGres/stages/2-setup/H3IV-storage-policies/openebs-sc
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-openebs-setup/H3IV-storage-policies/openebs-sc
+    - ./Openshift-EE/pipelines/PostGres/stages/2-openebs-setup/H3IV-storage-policies/openebs-sc
   
 90SQ-CSTOR-POOL:
   image: openebs/openshift-ci:latest
   stage: OPENEBS-SETUP
   script:
-    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-setup/90SQ-create-striped-pool/create-pool
-    - ./Openshift-EE/pipelines/PostGres/stages/2-setup/90SQ-create-striped-pool/create-pool
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-openebs-setup/90SQ-create-striped-pool/create-pool
+    - ./Openshift-EE/pipelines/PostGres/stages/2-openebs-setup/90SQ-create-striped-pool/create-pool
     
 .func_test_template:
   image: openebs/openshift-ci:latest
