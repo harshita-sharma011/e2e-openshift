@@ -1,0 +1,82 @@
+## Define the stages & order of execution
+
+stages:
+  - CLUSTER-SETUP
+  - OPENEBS-SETUP
+  - FUNCTIONAL
+  - CHAOS
+  - CLEANUP
+
+EUOS-OpenShift-3.10:
+  image: openebs/openshift-ci:latest
+  stage: CLUSTER-SETUP
+  script:     
+    - chmod 755 ./Openshift-EE/pipelines/PostGres/stages/1-cluster-setup/EUOS-cluster-state/cluster-state
+    - ./Openshift-EE/pipelines/PostGres/stages/1-cluster-setup/EUOS-cluster-state/cluster-state
+
+508B-OpenEBS-v0.8.1:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-setup/508B-openebs-deploy/deploy-openebs
+    - ./Openshift-EE/pipelines/PostGres/stages/2-setup/508B-openebs-deploy/deploy-openebs
+
+H3IV-OpenEBS-POLICIES:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-setup/H3IV-storage-policies/openebs-sc
+    - ./Openshift-EE/pipelines/PostGres/stages/2-setup/H3IV-storage-policies/openebs-sc
+  
+90SQ-CSTOR-POOL:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/2-setup/90SQ-create-striped-pool/create-pool
+    - ./Openshift-EE/pipelines/PostGres/stages/2-setup/90SQ-create-striped-pool/create-pool
+    
+.func_test_template:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  when: always
+  dependencies:
+    - 508B-OpenEBS-v0.8.1
+     
+7X0S-PostGres-Provision:
+  extends: .func_test_template
+  script: 
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/3-functional/7X0S-deploy-postgresql/postgres-deploy
+    - ./Openshift-EE/pipelines/PostGres/stages/3-functional/7X0S-deploy-postgresql/postgres-deploy
+
+.chaos_test_template:
+  image: openebs/openshift-ci:latest
+  stage: CHAOS
+  when: always
+  dependencies:
+    - 508B-OpenEBS-v0.8.1
+
+5S9V-App-pod-kill:
+  extends: .chaos_test_template
+  script: 
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/4-chaos/5S9V-postgresql-pod-failure/app-pod-kill
+    - ./Openshift-EE/pipelines/PostGres/stages/4-chaos/5S9V-postgresql-pod-failure/app-pod-kill
+
+L1P1-openebs-Uninstall:
+  image: openebs/openshift-ci:latest
+  stage: CLEANUP
+  when: always
+  dependencies:
+    - 508B-OpenEBS-v0.8.1
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/5-cleanup/L1P1-openebs-cleanup/openebs-cleanup
+    - ./Openshift-EE/pipelines/PostGres/stages/5-cleanup/L1P1-openebs-cleanup/openebs-cleanup
+  
+NXFW-cluster-Delete:
+  image: openebs/openshift-ci:latest
+  stage: CLEANUP
+  when: always
+  dependencies:
+    - EUOS-OpenShift-3.10
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/PostGres/stages/5-cleanup/NXFW-cluster-cleanup/cluster-cleanup
+    - ./Openshift-EE/pipelines/PostGres/stages/5-cleanup/NXFW-cluster-cleanup/cluster-cleanup
