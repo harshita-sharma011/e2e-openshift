@@ -1,0 +1,82 @@
+## Define the stages & order of execution
+
+stages:
+  - CLUSTER-SETUP
+  - OPENEBS-SETUP
+  - FUNCTIONAL
+  - CHAOS
+  - CLEANUP
+
+JZG6-OpenShift-3.10:
+  image: openebs/openshift-ci:latest
+  stage: CLUSTER-SETUP
+  script:     
+    - chmod 755 ./Openshift-EE/pipelines/Minio/stages/1-cluster-setup/JZG6-cluster-setup/cluster-state
+    - ./Openshift-EE/pipelines/Minio/stages/1-cluster-setup/JZG6-cluster-setup/cluster-state
+
+0SUW-OpenEBS-v0.8.1:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/Minio/stages/2-setup/0SUW-openebs-depoy/deploy-openebs
+    - ./Openshift-EE/pipelines/Minio/stages/2-setup/0SUW-openebs-depoy/deploy-openebs
+
+AG00-OpenEBS-POLICIES:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/Minio/stages/2-setup/AG00-storage-policies/storage-policies
+    - ./Openshift-EE/pipelines/Minio/stages/2-setup/AG00-storage-policies/storage-policies
+  
+IGDY-CSTOR-POOL:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/Minio/stages/2-setup/IGDY-create-striped-pool/create-disk-pool
+    - ./Openshift-EE/pipelines/Minio/stages/2-setup/IGDY-create-striped-pool/create-disk-pool
+    
+.func_test_template:
+  image: openebs/openshift-ci:latest
+  stage: FUNCTIONAL
+  when: always
+  dependencies:
+    - 0SUW-OpenEBS-v0.8.1
+     
+3T80-Minio-Provision:
+  extends: .func_test_template
+  script: 
+    - chmod 775 ./Openshift-EE/pipelines/Minio/stages/3-functional/7KN-deploy-minio/deploy-minio
+    - ./Openshift-EE/pipelines/Minio/stages/3-functional/7KN-deploy-minio/deploy-minio
+
+.chaos_test_template:
+  image: openebs/openshift-ci:latest
+  stage: CHAOS
+  when: always
+  dependencies:
+    - 0SUW--OpenEBS-v0.8.1
+
+96M8-Pod-Kill:
+  extends: .chaos_test_template
+  script: 
+    - chmod 775 ./Openshift-EE/pipelines/Minio/stages/4-chaos/96M8-minio-pod-failure/minio-pod-failure
+    - ./Openshift-EE/pipelines/NuoDB/Minio/4-chaos/96M8-minio-pod-failure/minio-pod-failure
+
+EGE3-openebs-Uninstall:
+  image: openebs/openshift-ci:latest
+  stage: CLEANUP
+  when: always
+  dependencies:
+    - 0SUW-OpenEBS-v0.8.1
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/Minio/stages/5-cleanup/EGE3-cluster-cleanup/cluster-cleanup
+    - ./Openshift-EE/pipelines/Minio/stages/5-cleanup/EGE3-cluster-cleanup/cluster-cleanup
+  
+FJMC-cluster-Delete:
+  image: openebs/openshift-ci:latest
+  stage: CLEANUP
+  when: always
+  dependencies:
+    - JZG6-OpenShift-3.10
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/5-cleanup/FJMC-openebs-cleanup/openebs-cleanup
+    - ./Openshift-EE/pipelines/NuoDB/stages/5-cleanup/FJMC-openebs-cleanup/openebs-cleanup
