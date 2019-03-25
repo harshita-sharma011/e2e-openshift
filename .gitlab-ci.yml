@@ -53,7 +53,7 @@ IGDY-CSTOR-POOL:
   stage: CHAOS
   when: always
   dependencies:
-    - 0SUW--OpenEBS-v0.8.1
+    - 0SUW-OpenEBS-v0.8.1
 
 96M8-Pod-Kill:
   extends: .chaos_test_template
