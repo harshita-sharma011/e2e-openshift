@@ -18,8 +18,12 @@ current_time=$(eval $time)
 present_dir=$(pwd)
 echo $present_dir
 
-# Removing test_id from e2e-result.yml spec for simple mode
-sed -i "s/-<job_id>/ /g" Openshift-EE/utils/e2e-result.yml
+for i in efk-vars.yml efk.yml get_url.yml; do
+  wget https://raw.githubusercontent.com/openebs/e2e-infrastructure/master/workload/efk-client/playbook/$i
+done
+
+echo "EFK: Deploying Aggregrator and Forwarder on client"
+ansible-playbook efk.yml --extra-vars "commit_id=$commit_id pipeline_id=$pipeline_id"
 
 # Applying e2e-CRD
 echo "***Applying e2e-crd***********"
