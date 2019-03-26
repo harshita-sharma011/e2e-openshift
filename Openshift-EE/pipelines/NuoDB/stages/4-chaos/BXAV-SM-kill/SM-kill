@@ -34,7 +34,7 @@ run_test=apps/nuodb/chaos/app_pod_failure/run_litmus_test.yml
 cat $run_test
 sed -i -e 's/nodetype=sm/app=sm-a/g' $run_test
 
-bash ../Openshift-EE/utils/litmus_job_runner label='app:nuodb-app-chaos' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='name:nuodb-app-chaos' job=$run_test
 
 echo "Dumping state of cluster post job run"; echo ""
 bash ../Openshift-EE/utils/dump_cluster_state;
