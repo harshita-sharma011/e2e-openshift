@@ -61,6 +61,18 @@ BXAV-SM-Kill:
     - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/4-chaos/BXAV-SM-kill/SM-kill
     - ./Openshift-EE/pipelines/NuoDB/stages/4-chaos/BXAV-SM-kill/SM-kill
 
+ALP2-TE-kill:
+  extends: .chaos_test_template
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/4-chaos/ALP2-TE-kill/TE-kill
+    - ./Openshift-EE/pipelines/NuoDB/stages/4-chaos/ALP2-TE-kill/TE-kill
+
+564Z-Admin-kill:
+  extends: .chaos_test_template
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/NuoDB/stages/4-chaos/564Z-Admin-kill/Admin-kill
+    - ./Openshift-EE/pipelines/NuoDB/stages/4-chaos/564Z-Admin-kill/Admin-kill 
+
 5CJE-openebs-Uninstall:
   image: openebs/openshift-ci:latest
   stage: CLEANUP
