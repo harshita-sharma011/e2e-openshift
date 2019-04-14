@@ -1,0 +1,61 @@
+#!/bin/bash
+set -x
+
+pod() {
+echo $CI_JOB_ID
+###clone e2e-openshift-repo
+echo "cloning e2e-openshift repo*************"
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'git clone -b nuodb https://github.com/openebs/e2e-openshift.git'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd e2e-openshift && bash Openshift-EE/pipelines/NuoDB/stages/4-chaos/ALP2-TE-kill/TE-kill node '"'$CI_JOB_ID'"''
+}
+
+node() {
+job_id=$(echo $1)
+time="date"
+current_time=$(eval $time)
+echo "*********Applying e2e-crd***********"
+kubectl apply -f Openshift-EE/utils/e2e-crd.yml
+echo "*****Deploying openebs*******"
+bash Openshift-EE/utils/pooling jobname:te-kill
+bash Openshift-EE/utils/e2e-cr jobname:admin-kill jobphase:Running init_time:"$current_time"
+
+# Removing test_id from e2e-result.yml spec for simple mode
+#sed -i "s/-<job_id>/ /g" Openshift-EE/utils/result-volume-replica-distribution.yml
+
+kubectl apply -f Openshift-EE/utils/result-admin-kill.yml
+
+run_id="admin-kill";test_name=$(bash Openshift-EE/utils/generate_test_name testcase=nuodb-app-chaos metadata=${run_id})
+echo $test_name
+
+echo "*******Perform Admin-Kill Litmus test************"
+cd litmus
+echo "Running the litmus test.."
+cp apps/nuodb/chaos/app_pod_failure/run_litmus_test.yml run_admin_kill.yml
+
+sed -i -e 's/nodetype=sm/app=admin/g' \
+-e 's/name: nuodb-app-chaos/name: nuodb-app-chaos-admin/g' run_admin_kill.yml
+
+sed -i '/command:/i \
+          - name: RUN_ID\
+            value: '"$run_id"'\
+' run_admin_kill.yml
+
+bash ../Openshift-EE/utils/litmus_job_runner label='name:nuodb-app-chaos-admin' job=run_admin_kill.yml
+
+echo "Dumping state of cluster post job run"; echo ""
+bash ../Openshift-EE/utils/dump_cluster_state;
+
+#################
+## GET RESULT  ##
+#################
+
+## Check the test status & result from the litmus result custom resource
+
+cd .. && bash Openshift-EE/utils/get_litmus_result ${test_name} admin-kill
+}
+
+if [ "$1" == "node" ];then
+  node $2
+else
+  pod
+fi
