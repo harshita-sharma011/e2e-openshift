@@ -30,7 +30,7 @@ cd litmus
 echo "Running the litmus test.."
 cp apps/nuodb/chaos/app_pod_failure/run_litmus_test.yml run_admin_kill.yml
 
-sed -i -e 's/nodetype=sm/app=admin/g' \
+sed -i -e 's/nodetype=sm/app=a/g' \
 -e 's/name: nuodb-app-chaos/name: nuodb-app-chaos-admin/g' run_admin_kill.yml
 
 sed -i '/command:/i \
