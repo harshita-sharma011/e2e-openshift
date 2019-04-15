@@ -80,7 +80,7 @@ export OPENEBS_IO_CSTOR_TARGET_IMAGE=$(eval python env_exporter.py -o target -fp
 
 export OPENEBS_IO_CSTOR_POOL_EXPORTER_IMAGE=$(eval python env_exporter.py -o iovolume -fp ../baseline/baseline)
 
-export NODE_DISK_MANAGER_IMAGE=v0.3.3
+export NODE_DISK_MANAGER_IMAGE=v0.3.4
 
 cd ../..
 
@@ -98,7 +98,7 @@ python3 env.py -f providers/openebs/installers/operator/master/litmusbook/openeb
 
 echo "updated yaml"
 sed -i -e 's/imagePullPolicy: Always/imagePullPolicy: IfNotPresent/g' \
--e 's/value: master/value: v0.8.x/g' providers/openebs/installers/operator/master/litmusbook/openebs_setup.yaml
+-e 's/value: master/value: v0.9.x/g' providers/openebs/installers/operator/master/litmusbook/openebs_setup.yaml
 cat providers/openebs/installers/operator/master/litmusbook/openebs_setup.yaml
 
 #################
