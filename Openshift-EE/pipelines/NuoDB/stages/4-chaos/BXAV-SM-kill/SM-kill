@@ -13,13 +13,10 @@ node() {
 job_id=$(echo $1)
 time="date"
 current_time=$(eval $time)
-echo "*********Applying e2e-crd***********"
-kubectl apply -f Openshift-EE/utils/e2e-crd.yml
+
 echo "*****Deploying openebs*******"
-bash Openshift-EE/utils/e2e-cr jobname:sm-kill jobphase:Waiting
+bash Openshift-EE/utils/pooling jobname:admin-kill
 bash Openshift-EE/utils/e2e-cr jobname:sm-kill jobphase:Running init_time:"$current_time"
-bash Openshift-EE/utils/e2e-cr jobname:te-kill jobphase:Waiting
-bash Openshift-EE/utils/e2e-cr jobname:admin-kill jobphase:Waiting
 
 # Removing test_id from e2e-result.yml spec for simple mode
 #sed -i "s/-<job_id>/ /g" Openshift-EE/utils/result-volume-replica-distribution.yml
