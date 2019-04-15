@@ -12,9 +12,8 @@ sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p $port 'cd e2e-open
 node() {
 job_id=$(echo $1)
 time="date"
+
 current_time=$(eval $time)
-echo "*********Applying e2e-crd***********"
-kubectl apply -f Openshift-EE/utils/e2e-crd.yml
 echo "*****Deploying openebs*******"
 bash Openshift-EE/utils/pooling jobname:sm-kill
 bash Openshift-EE/utils/e2e-cr jobname:te-kill jobphase:Running init_time:"$current_time"

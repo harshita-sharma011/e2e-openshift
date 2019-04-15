@@ -13,8 +13,6 @@ node() {
 job_id=$(echo $1)
 time="date"
 current_time=$(eval $time)
-echo "*********Applying e2e-crd***********"
-kubectl apply -f Openshift-EE/utils/e2e-crd.yml
 echo "*****Deploying openebs*******"
 bash Openshift-EE/utils/pooling jobname:te-kill
 bash Openshift-EE/utils/e2e-cr jobname:admin-kill jobphase:Running init_time:"$current_time"
