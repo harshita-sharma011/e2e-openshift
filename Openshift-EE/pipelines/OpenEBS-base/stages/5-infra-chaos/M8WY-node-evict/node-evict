@@ -91,12 +91,12 @@ cp apps/busybox/deployers/run_litmus_test.yml deprovision_evict_node.yml
 
 sed -i -e 's/generateName: litmus-busybox-deploy/generateName: litmus-busybox-deprovision/g' \
 -e 's/app-busybox-ns/evict-node/g' \
--e 's/busybox-litmus/busybox-evict/g' \
+-e 's/busybox-litmus/busybox-deprovision-evict/g' \
 -e 's/value: provision/value: deprovision/g' deprovision_evict_node.yml
 
 cat deprovision_evict_node.yml
 
-bash ../Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision-litmus' deprovision_evict_node.yml
+bash ../Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision-evict' deprovision_evict_node.yml
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:evict-node $test_name jobid:"$job_id" pipelineid:"$pipeline_id" testcaseid:"$case_id"
