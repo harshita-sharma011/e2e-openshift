@@ -21,12 +21,12 @@ BFDT-OpenShift-3.10:
     - chmod 775 ./Openshift-EE/pipelines/kafka/stages/2-setup/9FWN-openebs-deploy/deploy-openebs
     - ./Openshift-EE/pipelines/kafka/stages/2-setup/9FWN-openebs-deploy/deploy-openebs
 
-PHK2-OpenEBS-POLICIES:
-  image: openebs/openshift-ci:latest
-  stage: OPENEBS-SETUP
-  script:
-    - chmod 775 ./Openshift-EE/pipelines/kafka/stages/2-setup/PHK2-storage-policies/openebs-sc
-    - ./Openshift-EE/pipelines/kafka/stages/2-setup/PHK2-storage-policies/openebs-sc
+      #PHK2-OpenEBS-POLICIES:
+      #  image: openebs/openshift-ci:latest
+      #  stage: OPENEBS-SETUP
+      #  script:
+      #    - chmod 775 ./Openshift-EE/pipelines/kafka/stages/2-setup/PHK2-storage-policies/openebs-sc
+      #    - ./Openshift-EE/pipelines/kafka/stages/2-setup/PHK2-storage-policies/openebs-sc
   
 IGVJ-CSTOR-POOL:
   image: openebs/openshift-ci:latest
